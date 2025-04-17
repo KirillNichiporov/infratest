@@ -1,0 +1,113 @@
+# services:
+#   gitlab:
+#     image: gitlab/gitlab-ce:16.10.10-ce.0
+#     container_name: gitlab
+#     restart: always
+#     environment:
+#       # GITLAB_ROOT_PASSWORD: "${ROOT_PASSWORD}" 
+#       # EXTERNAL_URL: "http://localhost"
+#       GITLAB_ROOT_EMAIL: "root@local"
+#       GITLAB_OMNIBUS_CONFIG: |
+#           external_url "http://localhost"
+#           gitlab_rails['initial_root_password'] = "${ROOT_PASSWORD}" 
+#       GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN: "${RUNNER_REGISTRATION_TOKEN}"
+#     # command: |
+#     #   gitlab-rails runner "token = User.find_by_username('root').personal_access_tokens.create(scopes: ['create_runner'], name: 'create_runner_pat', expires_at: 1.days.from_now); token.set_token('25502e3103cdc4e1cf92616def0c9d'); token.save!"; \
+#     #   curl --request POST --header "PRIVATE-TOKEN: 25502e3103cdc4e1cf92616def0c9d" --data "runner_type=instance_type" "http://localhost/api/v4/user/runners"
+#     ports:
+#       - '80:80'
+#     healthcheck:
+#       test: curl --fail http://localhost/users/sign_in || exit 1
+#       interval: 60s
+#       retries: 5
+#       start_period: 20s
+#       timeout: 10s
+#     # volumes:
+#     #   - './etc/gitlab/config:/etc/gitlab'
+#     #   - './var/log/gitlab/logs:/var/log/gitlab'
+#     #   - './var/opt/gitlab/data:/var/opt/gitlab'
+#     # networks:
+#     #   - gitlab_network
+
+#   gitlab-runner:
+#     image: gitlab/gitlab-runner:alpine
+#     # entrypoint: ["gitlab-runner", "register", "--non-interactive", "--locked=false", "--name=${RUNNER_NAME}", "--url=http://gitlab", "--clone-url=http://gitlab", "--docker-image=ruby:2.7", "--token", "glrt-t3_bHGtBeze_8yPpjTNpFR8"]
+#     environment:
+#       REGISTRATION_TOKEN: ${RUNNER_REGISTRATION_TOKEN}
+#     command:
+#       - register
+#       - --non-interactive
+#       - --name=${RUNNER_NAME}
+#       - --executor=docker
+#       - --url=http://gitlab
+#       - --docker-image=ruby:2.7
+#       # - --token=${RUNNER_REGISTRATION_TOKEN}
+#     volumes:
+#         - ./config:/etc/gitlab-runner:z
+#         - ./data/runner/cache:/cache
+#         - ./var/run/docker.sock:/var/run/docker.sock
+#     # networks:
+#     #   - gitlab_network
+
+#     depends_on:
+#       gitlab:
+#         condition: service_healthy
+
+# # networks:
+# #   gitlab_network:
+# #     name: gitlab_network
+
+
+
+
+
+
+
+
+
+
+
+version: '3.8'
+services:
+  gitlab-server:
+    image: gitlab/gitlab-ce:latest
+    container_name: gitlab-server
+    environment:
+      GITLAB_ROOT_EMAIL: "root@local"
+      GITLAB_ROOT_PASSWORD: "${ROOT_PASSWORD}"
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://localhost:8000'
+        nginx['listen_port'] = 8000
+      GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN: "${RUNNER_REGISTRATION_TOKEN}"
+    # volumes:
+    #   - ./gitlab/config:/etc/gitlab
+    #   - ./gitlab/logs:/var/log/gitlab
+    #   - ./gitlab/data:/var/opt/gitlab
+    ports:
+      - '8000:8000'
+    healthcheck:
+      test: curl --fail http://localhost:8000/users/sign_in || exit 1
+      interval: 60s
+      timeout: 3s
+      retries: 5
+
+  gitlab-runner:
+    image: gitlab/gitlab-runner:latest
+    container_name: gitlab-runner
+    entrypoint: [""]
+    command: ["/bin/sh", "-c", "gitlab-runner register \
+                --non-interactive \
+                --url 'http://localhost:8000' \
+                --name=${RUNNER_NAME} \
+                --registration-token '${RUNNER_REGISTRATION_TOKEN}' \ 
+                --executor 'docker' \
+                --tag-list 'devops-test' \
+                --docker-network-mode 'host' \
+                --docker-image 'python:alpine' \
+            && gitlab-runner run --user=gitlab-runner --working-directory=/etc/gitlab-runner"]
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock   
+    network_mode: 'host'
+    depends_on:
+      gitlab-server: 
+        condition: service_healthy
