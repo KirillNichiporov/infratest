@@ -21,9 +21,26 @@ Build Docker images:
   stage: build
   image: docker 
   tags: [devops-test]
+  services: 
+    - docker:dind
   script:
     - cd server
     - docker build -t server-python .
+  artifacts:
+    paths:
+      - public
+
+Push docker image:
+  stage: push-image
+  image: docker
+  tags: [devops-test]
+  services: 
+    - docker:dind
+  script:
+    - echo "Push"
+  needs: "Build Docker images"
+    - job: 
+      artifacts: true
 
 Testing:
   stage: test
