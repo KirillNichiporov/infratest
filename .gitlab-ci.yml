@@ -9,16 +9,20 @@ default:
 
 Linter Python:
   stage: lint 
+  image: alpine/flake8
   tags: [devops-test]
   script: 
-    - echo "Lint"
+    - flake --version
+    - flake server/server.py
 
 
 Build Docker images:
   stage: build
+  image: docker 
   tags: [devops-test]
   script:
-    - echo "Build"
+    - cd server
+    - docker build -t server-python .
 
 Testing:
   stage: test
