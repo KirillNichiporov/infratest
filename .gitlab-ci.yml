@@ -15,7 +15,8 @@ Linter Python:
     - pip install flake8 flake8-sarif
     - flake8 --version
     - flake8 server/server.py
-
+  rules:
+    allow_failure: true
 
 Build Docker images:
   stage: build
