@@ -12,8 +12,8 @@ Linter Python:
   image: alpine/flake8
   tags: [devops-test]
   script: 
-    - flake --version
-    - flake server/server.py
+    - flake8 --version
+    - flake8 server/server.py
 
 
 Build Docker images:
