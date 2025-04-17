@@ -38,8 +38,8 @@ Push docker image:
     - docker:dind
   script:
     - echo "Push"
-  needs: "Build Docker images"
-    - job: 
+  needs:
+    - job: "Build Docker images"
       artifacts: true
 
 Testing:
