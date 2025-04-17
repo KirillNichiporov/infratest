@@ -9,25 +9,25 @@ default:
 
 Linter Python:
   stage: lint 
-  tags: devops-test
+  tags: [devops-test]
   script: 
     - echo "Lint"
 
 
 Build Docker images:
   stage: build
-  tags: devops-test
+  tags: [devops-test]
   script:
     - echo "Build"
 
 Testing:
   stage: test
-  tags: devops-test
+  tags: [devops-test]
   script:
     - echo "Test"
 
 Deploy to staging:
   stage: deploy
-  tags: devops-test
+  tags: [devops-test]
   script:
     - echo "deploy"
