@@ -111,3 +111,12 @@ services:
     depends_on:
       gitlab-server: 
         condition: service_healthy
+  
+  registry:
+    image: registry:latest
+    container_name: registry
+    ports:
+      - 5000:5000
+    depends_on:
+      gitlab-server: 
+        condition: service_healthy
