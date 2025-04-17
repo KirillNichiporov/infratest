@@ -9,9 +9,10 @@ default:
 
 Linter Python:
   stage: lint 
-  image: alpine/flake8
+  image: python:3.9.22-alpine
   tags: [devops-test]
-  script: 
+  script:
+    - pip install flake8 flake8-sarif
     - flake8 --version
     - flake8 server/server.py
 
