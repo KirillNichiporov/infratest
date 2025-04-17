@@ -1,7 +1,7 @@
 stages:
   - lint
   - build
-  - push
+  - push-image
   - test
   - deploy
 
