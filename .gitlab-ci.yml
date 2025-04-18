@@ -1,8 +1,9 @@
 stages:
   - lint
   - build
-  - test
   - deploy
+  - test
+  - notify
 
 default:
   image: alpine
@@ -29,14 +30,26 @@ Build Docker images:
       --dockerfile "${CI_PROJECT_DIR}/server/Dockerfile"
       --destination "localhost:5000/server:${CI_COMMIT_TAG}"
 
-Testing:
-  stage: test
-  tags: [devops-test]
-  script:
-    - echo "Test"
-
 Deploy to staging:
   stage: deploy
   tags: [devops-test]
   script:
     - echo "deploy"
+    - sh .notify.sh ✅
+  when: manual
+
+Testing:
+  stage: test
+  tags: [devops-test]
+  script:
+    - echo "Test"
+  needs:
+   - "Deploy to staging"
+
+
+Notification Error:
+  stage: notify
+  tags: [devops-test]
+  script:
+    - sh .notify.sh ❌
+  when: on_failure
