@@ -32,9 +32,9 @@ Build Docker images:
 
 Deploy to staging:
   stage: deploy
-  image: docker:24.0.5
+  image: docker
   services:
-    - docker:24.0.5-dind
+    - docker
   tags: [devops-test]
   variables: 
     DOCKER_HOST: tcp://docker:2375/
