@@ -32,13 +32,13 @@ Build Docker images:
 
 Deploy to staging:
   stage: deploy
-  image: docker
+  image: docker:20.10.16
   services:
-    - name: docker:dind
+    - name: docker:20.10.16-dind
       alias: docker
   tags: [devops-test]
-  variables: 
-    DOCKER_HOST: tcp://docker:2376/
+  # variables: 
+  #   DOCKER_HOST: tcp://docker:2376/
   script:
     - echo "deploy"
     - ls
