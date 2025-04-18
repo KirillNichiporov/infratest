@@ -35,8 +35,6 @@ Deploy to staging:
   image: docker:24.0.5
   services:
     - docker:24.0.5-dind
-  before_script:
-    - docker info
   tags: [devops-test]
   variables: 
     DOCKER_HOST: tcp://docker:2375/
