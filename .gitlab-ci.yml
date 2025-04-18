@@ -34,7 +34,8 @@ Deploy to staging:
   stage: deploy
   image: docker
   services:
-    - docker:dind
+    - name: docker:dind
+      alias: docker
   tags: [devops-test]
   variables: 
     DOCKER_HOST: tcp://docker:2376/
