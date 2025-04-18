@@ -50,7 +50,8 @@ Testing:
 
 Notification Error:
   stage: notify
+  image: alpine/curl
   tags: [devops-test]
   script:
-    - sh ${CI_PROJECT_DIR}/notify.sh ✅ ❌
+    - sh ${CI_PROJECT_DIR}/notify.sh ❌
   when: on_failure
