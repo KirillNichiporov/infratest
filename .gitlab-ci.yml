@@ -32,6 +32,7 @@ Build Docker images:
 
 Deploy to staging:
   stage: deploy
+  image: alpine/curl
   tags: [devops-test]
   script:
     - echo "deploy"
@@ -48,7 +49,7 @@ Testing:
    - "Deploy to staging"
 
 
-Notification Error:
+Notification for Errors:
   stage: notify
   image: alpine/curl
   tags: [devops-test]
