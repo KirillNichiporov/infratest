@@ -35,7 +35,8 @@ Deploy to staging:
   tags: [devops-test]
   script:
     - echo "deploy"
-    - sh notify.sh ✅
+    - ls
+    - sh ${CI_PROJECT_DIR}/notify.sh ✅
 
 
 Testing:
@@ -51,5 +52,5 @@ Notification Error:
   stage: notify
   tags: [devops-test]
   script:
-    - sh notify.sh ❌
+    - sh ${CI_PROJECT_DIR}/notify.sh ✅ ❌
   when: on_failure
