@@ -35,8 +35,8 @@ Deploy to staging:
   tags: [devops-test]
   script:
     - echo "deploy"
-    - sh .notify.sh ✅
-  when: manual
+    - sh notify.sh ✅
+
 
 Testing:
   stage: test
@@ -51,5 +51,5 @@ Notification Error:
   stage: notify
   tags: [devops-test]
   script:
-    - sh .notify.sh ❌
+    - sh notify.sh ❌
   when: on_failure
