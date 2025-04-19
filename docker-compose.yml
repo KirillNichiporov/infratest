@@ -131,9 +131,22 @@ services:
     command: ["--insecure-registry=registry:5000"]
     privileged: true
     environment:
-      DOCKER_TLS_CERTDIR: /certs
+      DOCKER_TLS_CERTDIR: ""
     ports:
-      - '2376:2376'
+      - '2376:2375'
+    depends_on:
+      gitlab-server: 
+        condition: service_healthy
+
+  dind-2:
+    image: docker:dind
+    container_name: staging2
+    command: ["--insecure-registry=registry:5000"]
+    privileged: true
+    environment:
+      DOCKER_TLS_CERTDIR: ""
+    ports:
+      - '2377:2375'
     depends_on:
       gitlab-server: 
         condition: service_healthy
