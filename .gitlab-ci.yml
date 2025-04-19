@@ -39,8 +39,6 @@ Testing image:
   tags: [devops-test]
   script:
     - curl --fail http://localhost:80 || exit 1
-  
-  
 
 Deploy to staging:
   stage: deploy
@@ -63,7 +61,7 @@ Deploy to staging:
 
 
 Testing Service:
-  stage: test-image
+  stage: test-service
   image: alpine/curl
   tags: [devops-test]
   script:
