@@ -44,7 +44,7 @@ Deploy to staging:
     - ls
     #- docker exec -it staging sh -c "echo a && echo b"
     - docker context create staging-context --docker host=tcp://staging:2375
-    - docker context use staging-context
+    - docker context use staging-context --context
     - docker run -d registry:5000/server:latest
     - docker ps
     - sh ${CI_PROJECT_DIR}/notify.sh ✅
