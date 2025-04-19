@@ -37,8 +37,8 @@ Deploy to staging:
     - name: docker:dind
       entrypoint: ["sh", "-c", "dockerd-entrypoint.sh --insecure-registry=registry:5000"]
   tags: [devops-test]
-  variables: 
-    # DOCKER_HOST: tcp://localhost:2376/
+  # variables: 
+  #   DOCKER_HOST: tcp://localhost:2376/
   script:
     - echo "deploy"
     - ls
