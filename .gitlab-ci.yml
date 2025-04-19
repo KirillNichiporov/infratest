@@ -1,9 +1,8 @@
 stages:
   - lint
   - build
-  - test
   - deploy
-  - test-service
+  - test
   - notify
 
 default:
@@ -31,15 +30,6 @@ Build Docker images:
       --dockerfile "${CI_PROJECT_DIR}/server/Dockerfile"
       --destination "localhost:5000/server:${CI_COMMIT_TAG}"
 
-Testing image:
-  stage: test
-  image: localhost:5000/server
-  services: 
-    - name: alpine/curl
-  tags: [devops-test]
-  script:
-    - curl --fail http://localhost:80 || exit 1
-
 Deploy to staging:
   stage: deploy
   image: docker
@@ -61,7 +51,7 @@ Deploy to staging:
 
 
 Testing Service:
-  stage: test-service
+  stage: test
   image: alpine/curl
   tags: [devops-test]
   script:
