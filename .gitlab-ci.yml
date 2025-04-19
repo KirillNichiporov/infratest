@@ -44,8 +44,8 @@ Deploy to staging:
   script:
     - echo "deploy"
     - ls
-    #- docker exec -it staging sh -c "echo a && echo b"
-    - docker run -d registry:5000/server:latest
+    - docker exec -it staging sh -c "echo a && echo b"
+    # - docker run -d registry:5000/server:latest
     - sh ${CI_PROJECT_DIR}/notify.sh ✅
 
 
