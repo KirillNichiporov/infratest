@@ -43,7 +43,6 @@ Deploy to staging:
     - echo "deploy"
     - ls
     #- docker exec -it staging sh -c "echo a && echo b"
-    - docker login localhost:5000
     - docker run -d localhost:5000/server:latest
     - sh ${CI_PROJECT_DIR}/notify.sh ✅
 
