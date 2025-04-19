@@ -33,7 +33,7 @@ Build Docker images:
 
 Testing image:
   stage: test
-  image: registry:5000/server
+  image: localhost:5000/server
   services: 
     - name: alpine/curl
   tags: [devops-test]
