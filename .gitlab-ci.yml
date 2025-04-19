@@ -39,11 +39,11 @@ Deploy to staging:
   tags: [devops-test]
   variables: 
     DOCKER_HOST: tcp://localhost:2376/
-    DOCKER_OPTS: --insecure-registry="localhost:5000"
   script:
     - echo "deploy"
     - ls
-    #- docker exec -it staging sh -c "echo a && echo b" 
+    #- docker exec -it staging sh -c "echo a && echo b"
+    - docker login localhost:5000
     - docker run -d localhost:5000/server:latest
     - sh ${CI_PROJECT_DIR}/notify.sh ✅
 
