@@ -28,7 +28,7 @@ Build Docker images:
     - /kaniko/executor
       --context "${CI_PROJECT_DIR}/server"
       --dockerfile "${CI_PROJECT_DIR}/server/Dockerfile"
-      --destination "registry:5000/server:${CI_COMMIT_TAG}"
+      --destination "localhost:5000/server:${CI_COMMIT_TAG}"
 
 Deploy to staging:
   stage: deploy
