@@ -133,7 +133,7 @@ services:
     environment:
       DOCKER_TLS_CERTDIR: ""
     ports:
-      - '2376:2375'
+      - '2375:2375'
     depends_on:
       gitlab-server: 
         condition: service_healthy
