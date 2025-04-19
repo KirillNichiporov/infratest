@@ -97,7 +97,7 @@ services:
     entrypoint: [""]
     command: ["/bin/sh", "-c", "gitlab-runner register \
                 --non-interactive \
-                --url 'http://localhost:8000' \
+                --url 'http://gitlab-server:8000' \
                 --name=${RUNNER_NAME} \
                 --registration-token '${RUNNER_REGISTRATION_TOKEN}' \ 
                 --executor 'docker' \
@@ -107,7 +107,7 @@ services:
             && gitlab-runner run --user=gitlab-runner --working-directory=/etc/gitlab-runner"]
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock   
-    network_mode: 'host'
+    # network_mode: 'host'
     depends_on:
       gitlab-server: 
         condition: service_healthy
@@ -128,7 +128,7 @@ services:
   dind:
     image: docker:dind
     container_name: staging
-    command: ["--insecure-registry=localhost:5000"]
+    command: ["--insecure-registry=registry:5000"]
     privileged: true
     environment:
       DOCKER_TLS_CERTDIR: /certs

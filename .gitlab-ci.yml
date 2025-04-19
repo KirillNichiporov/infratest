@@ -28,7 +28,7 @@ Build Docker images:
     - /kaniko/executor
       --context "${CI_PROJECT_DIR}/server"
       --dockerfile "${CI_PROJECT_DIR}/server/Dockerfile"
-      --destination "localhost:5000/server:${CI_COMMIT_TAG}"
+      --destination "registry:5000/server:${CI_COMMIT_TAG}"
 
 Deploy to staging:
   stage: deploy
@@ -36,6 +36,7 @@ Deploy to staging:
   services: 
     - name: docker:dind
       alias: docker
+      command: ['--insecure-registry=registry:5000']
   tags: [devops-test]
   variables: 
     DOCKER_HOST: tcp://localhost:2376/
@@ -43,7 +44,7 @@ Deploy to staging:
     - echo "deploy"
     - ls
     #- docker exec -it staging sh -c "echo a && echo b"
-    - docker run -d localhost:5000/server:latest
+    - docker run -d registry:5000/server:latest
     - sh ${CI_PROJECT_DIR}/notify.sh ✅
 
 
