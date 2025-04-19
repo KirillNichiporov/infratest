@@ -38,11 +38,11 @@ Deploy to staging:
       alias: docker
   tags: [devops-test]
   variables: 
-    DOCKER_HOST: tcp://staging:2376/
+    DOCKER_HOST: tcp://localhost:2376/
   script:
     - echo "deploy"
     - ls
-    - #docker exec -it staging sh -c "echo a && echo b" 
+    #- docker exec -it staging sh -c "echo a && echo b" 
     - docker run -d localhost:5000/server:latest
     - sh ${CI_PROJECT_DIR}/notify.sh ✅
 

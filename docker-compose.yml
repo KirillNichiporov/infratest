@@ -131,6 +131,8 @@ services:
     privileged: true
     environment:
       DOCKER_TLS_CERTDIR: /certs
+    ports:
+      - '2376:2376'
     depends_on:
       gitlab-server: 
         condition: service_healthy
