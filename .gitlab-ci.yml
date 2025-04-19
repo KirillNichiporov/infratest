@@ -39,7 +39,6 @@ Deploy to staging:
   tags: [devops-test]
   variables: 
     DOCKER_HOST: tcp://localhost:2376/
-    DOCKER_TLS_CERTDIR: ''
   script:
     - echo "deploy"
     - ls
