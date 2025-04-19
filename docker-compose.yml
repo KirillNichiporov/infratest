@@ -124,3 +124,13 @@ services:
     depends_on:
       gitlab-server: 
         condition: service_healthy
+
+  dind:
+    image: docker:dind
+    container_name: staging
+    privileged: true
+    environment:
+      DOCKER_TLS_CERTDIR: /certs
+    depends_on:
+      gitlab-server: 
+        condition: service_healthy

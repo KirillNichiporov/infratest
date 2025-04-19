@@ -32,17 +32,17 @@ Build Docker images:
 
 Deploy to staging:
   stage: deploy
-  image: docker:20.10.16
+  image: docker
   services:
-    - name: docker:20.10.16-dind
+    - name: docker:dind
       alias: docker
   tags: [devops-test]
-  # variables: 
-  #   DOCKER_HOST: tcp://docker:2376/
+  variables: 
+    DOCKER_HOST: tcp://staging:2376/
   script:
     - echo "deploy"
     - ls
-    - docker run -d localhost:5000/server:latest
+    - docker exec -it staging sh -c "echo a && echo b" #docker run -d localhost:5000/server:latest
     - sh ${CI_PROJECT_DIR}/notify.sh ✅
 
 
